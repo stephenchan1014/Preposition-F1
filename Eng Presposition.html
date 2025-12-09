@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-Space Detective: The Missing Clue (F.1 Prepositions)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .scenario-box {
+            border: 2px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #e9ecef;
+            text-align: left;
+            min-height: 150px;
+            position: relative;
+        }
+        .detective-image {
+            width: 100%;
+            height: 150px;
+            background-color: #dcdcdc; /* Placeholder for a city map/scene */
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #555;
+            font-style: italic;
+        }
+        .interaction {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 30px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔎 Time-Space Detective: The Missing Clue</h1>
+    <p><strong>Mission:</strong> Help the detective find the valuable notebook stolen and hidden in the City Park!</p>
+    
+    <div class="detective-image">[Image Placeholder: A simple city map with a house, a park, and a coffee shop]</div>
+    
+    <div class="scenario-box">
+        <p id="scenario-text">Detective, you have the first lead! The informant said they hid the notebook **(1) __** **Sunday**. They also recall it was around **2:00 pm**. This is your first clue.</p>
+        <p>Complete Step 1:</p>
+        <div class="interaction">
+            We must get to the park because the informant said the notebook was hidden **(1) __** Sunday.
+            <select id="preposition1">
+                <option value="">Choose Preposition...</option>
+                <option value="at">at</option>
+                <option value="on">on</option>
+                <option value="in">in</option>
+            </select>
+            <button onclick="checkAnswer(1)">Confirm</button>
+        </div>
+        <div class="feedback" id="feedback1"></div>
+    </div>
+
+    <div class="scenario-box" id="step2" style="display:none;">
+        <p id="scenario-text2">Excellent! We know the day. Now, let's confirm the exact time. The informant said he would call you **(2) __** 2:00 pm to give you the location.</p>
+        <div class="interaction">
+            We must be ready to receive the call **(2) __** 2:00 pm.
+            <select id="preposition2">
+                <option value="">Choose Preposition...</option>
+                <option value="at">at</option>
+                <option value="on">on</option>
+                <option value="in">in</option>
+            </select>
+            <button onclick="checkAnswer(2)">Confirm</button>
+        </div>
+        <div class="feedback" id="feedback2"></div>
+    </div>
+
+    <div class="scenario-box" id="step3" style="display:none;">
+        <p id="scenario-text3">(The phone rings!) The informant tells you: The notebook is **(3) __** the park entrance, near a large tree! You need to head to the park entrance now.</p>
+        <div class="interaction">
+            The notebook is hidden **(3) __** the park entrance.
+            <select id="preposition3">
+                <option value="">Choose Preposition...</option>
+                <option value="at">at</option>
+                <option value="in">in</option>
+                <option value="near">near</option>
+            </select>
+            <button onclick="checkAnswer(3)">Confirm</button>
+        </div>
+        <div class="feedback" id="feedback3"></div>
+    </div>
+    
+    <div class="scenario-box" id="step4" style="display:none;">
+        <p id="scenario-text4">You reach the park entrance and find the large tree. The notebook is on a bench directly **(4) __** the tree. The notebook is safe!</p>
+        <div class="interaction">
+            The bench and the notebook are **(4) __** the tree.
+            <select id="preposition4">
+                <option value="">Choose Preposition...</option>
+                <option value="under">under</option>
+                <option value="behind">behind</option>
+                <option value="in front of">in front of</option>
+            </select>
+            <button onclick="checkAnswer(4)">Confirm</button>
+        </div>
+        <div class="feedback" id="feedback4"></div>
+        <button id="restart-button" style="display:none;" onclick="resetGame()">Start New Mission</button>
+    </div>
+
+</div>
+
+<script>
+    // Correct answers array (1. on, 2. at, 3. near, 4. under)
+    const correctAnswers = ["on", "at", "near", "under"]; 
+    let currentStep = 1;
+
+    // Function to check the answer
+    function checkAnswer(step) {
+        const selectElement = document.getElementById(`preposition${step}`);
+        const feedbackElement = document.getElementById(`feedback${step}`);
+        const selectedAnswer = selectElement.value;
+        const correctAnswer = correctAnswers[step - 1];
+
+        if (selectedAnswer === correctAnswer) {
+            feedbackElement.textContent = "✅ Correct! You successfully advanced one step!";
+            feedbackElement.className = "feedback correct";
+            // Disable current step's select and button
+            selectElement.disabled = true;
+            selectElement.nextElementSibling.disabled = true; 
+            
+            // Advance to the next step
+            if (step < 4) {
+                currentStep++;
+                document.getElementById(`step${currentStep}`).style.display = 'block';
+            } else {
+                // Game Over
+                document.getElementById('scenario-text4').innerHTML += "<br><strong>Congratulations, Time-Space Detective! Mission accomplished!</strong>";
+                document.getElementById('restart-button').style.display = 'block';
+            }
+        } else if (selectedAnswer === "") {
+            feedbackElement.textContent = "Please select a preposition.";
+            feedbackElement.className = "feedback incorrect";
+        } else {
+            feedbackElement.textContent = `❌ Incorrect. Try again. (Hint: ${getHint(step)})`;
+            feedbackElement.className = "feedback incorrect";
+        }
+    }
+
+    // Function to provide hints
+    function getHint(step) {
+        switch(step) {
+            case 1: return "Which preposition do we use for specific 'days' or 'dates'? (Time)"; // on
+            case 2: return "Which preposition do we use for specific 'clock times'? (Time)"; // at
+            case 3: return "This means in the 'vicinity' or 'general area' of the entrance, not exactly at the precise point. (Place)"; // near
+            case 4: return "The bench is positioned beneath the tree's branches. (Place)"; // under
+            default: return "";
+        }
+    }
+    
+    // Function to reset the game
+    function resetGame() {
+        currentStep = 1;
+        // Reset all steps
+        for (let i = 2; i <= 4; i++) {
+            document.getElementById(`step${i}`).style.display = 'none';
+        }
+        // Reset all selections and feedback
+        for (let i = 1; i <= 4; i++) {
+            const select = document.getElementById(`preposition${i}`);
+            select.value = "";
+            select.disabled = false;
+            select.nextElementSibling.disabled = false;
+            document.getElementById(`feedback${i}`).textContent = "";
+            document.getElementById(`feedback${i}`).className = "feedback";
+        }
+        document.getElementById('scenario-text4').innerHTML = "You reach the park entrance and find the large tree. The notebook is on a bench directly **(4) __** the tree. The notebook is safe!";
+        document.getElementById('restart-button').style.display = 'none';
+    }
+
+</script>
+
+</body>
+</html>
